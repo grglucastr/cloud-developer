@@ -67,16 +67,55 @@ import { Car, cars as cars_list } from './cars';
       return res.status(200)
                 .send(`Welcome to the Cloud, ${name}!`);
   } );
+  
+  app.get("/cars", (req:Request, res:Response) => {
+    const {make, type} = req.query;
 
-  // @TODO Add an endpoint to GET a list of cars
-  // it should be filterable by make with a query paramater
+    let filteredCars = cars;
 
-  // @TODO Add an endpoint to get a specific car
-  // it should require id
-  // it should fail gracefully if no matching car is found
+    if(make){
+      filteredCars = filteredCars.filter(car => car.make === make);
+    }
 
-  /// @TODO Add an endpoint to post a new car to our list
-  // it should require id, type, model, and cost
+    if(type){
+      filteredCars = filteredCars.filter(car => car.type === type);
+    }
+
+    if(filteredCars.length === 0){
+      return res.status(404).send([]);
+    }
+
+    return res.status(200).send(filteredCars);
+  });
+
+  app.get("/cars/:id", (req:Request, res:Response) => {
+    const { id } = req.params;
+
+    if(!id){
+      return res.status(400).send("Car ID is required");
+    }
+
+    const car = cars.filter(car => car.id === parseInt(id));
+    if(!car){
+      return res.status(404).send("Car not found");
+    }
+
+    return res.status(200).send(car);
+  });
+
+  app.post("/cars", (req:Request, res:Response) => {
+    const { id, type, model, cost, make } = req.body;
+
+    if(!id) { return res.status(400).send("Car ID is mandatory"); }
+    if(!type) { return res.status(400).send("Car TYPE is mandatory"); }
+    if(!model) { return res.status(400).send("Car MODEL is mandatory"); }
+    if(!cost) { return res.status(400).send("Car COST is mandatory"); }
+
+    const car = {id, type, model, cost, make};
+    cars = [...cars, car];
+
+    res.status(201).send(car);
+  });
 
   // Start the Server
   app.listen( port, () => {
