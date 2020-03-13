@@ -16,8 +16,19 @@ router.get('/', async (req: Request, res: Response) => {
     res.send(items);
 });
 
-//@TODO
-//Add an endpoint to GET a specific resource by Primary Key
+router.get('/:id', async(req:Request, res:Response) => {
+    const { id } = req.params;
+    if(!id){
+        throw new Error('Id param is required');
+    }
+
+    FeedItem.findByPk(id).then((feedItem) => {
+        if(feedItem === null){
+            return res.status(404).send([]);
+        }
+        return res.status(200).send(feedItem);
+    });
+});
 
 // update a specific resource
 router.patch('/:id', 
