@@ -5,9 +5,9 @@ export const config = {
     "database": process.env.DEV_DATABASE,
     "host": process.env.DEV_HOST,
     "dialect": "postgres",
-    "aws_region": "us-east-2",
-    "aws_profile": "default",
-    "aws_media_bucket": "udagram-ruttner-dev"
+    "aws_region": process.env.AWS_REGION,
+    "aws_profile": process.env.AWS_PROFILE,
+    "aws_media_bucket": process.env.AWS_BUCKET
   },
   "prod": {
     "username": "",
