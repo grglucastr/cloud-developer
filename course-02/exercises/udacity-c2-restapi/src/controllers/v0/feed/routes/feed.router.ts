@@ -34,8 +34,23 @@ router.get('/:id', async(req:Request, res:Response) => {
 router.patch('/:id', 
     requireAuth, 
     async (req: Request, res: Response) => {
-        //@TODO try it yourself
-        res.send(500).send("not implemented")
+        const { id } = req.params;
+        if(!id){
+            throw new Error('Id param is required');
+        }
+
+        const { body } = req;
+
+        FeedItem.findByPk(id).then((feedItem) => {
+            if(feedItem === null){
+                return res.status(404).send([]);
+            }
+
+            const newValues = {...feedItem.dataValues, ...body};
+            feedItem.update(newValues, {fields: Object.keys(body)}).then((updated) => {
+                return res.status(200).send(updated);
+            });            
+        });
 });
 
 
