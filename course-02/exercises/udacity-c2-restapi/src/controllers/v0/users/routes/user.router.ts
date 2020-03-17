@@ -1,4 +1,4 @@
-/*import { Router, Request, Response } from 'express';
+import { Router, Request, Response } from 'express';
 
 import { User } from '../models/User';
 import { AuthRouter, requireAuth } from './auth.router';
@@ -16,4 +16,4 @@ router.get('/:id', async (req: Request, res: Response) => {
     res.send(item);
 });
 
-export const UserRouter: Router = router;*/
+export const UserRouter: Router = router;
