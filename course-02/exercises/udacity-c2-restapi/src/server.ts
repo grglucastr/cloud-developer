@@ -1,10 +1,12 @@
 import express from 'express';
+
+// Load the .env file
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { sequelize } from './sequelize';
-
 import { IndexRouter } from './controllers/v0/index.router';
-
 import bodyParser from 'body-parser';
-
 import { V0MODELS } from './controllers/v0/model.index';
 
 (async () => {
