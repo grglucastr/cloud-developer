@@ -30,6 +30,13 @@ Postman is a useful tool to issue and save requests. Postman can create GET, PUT
 ***
 
 ## Running the Server Locally
+### Before you run
+Before you run, you have to configure database settings.
+1) Copy and paste in the same directory the ```.env.example``` file.
+2) Rename the file to ```.env```.
+3) Change its content according to your database connection settings
+
+
 To run the server locally in developer mode, open terminal and run:
 ```bash
 npm run dev
